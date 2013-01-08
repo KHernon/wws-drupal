@@ -90,62 +90,6 @@ function wws_discography_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-album-field_includes'.
-  $fields['node-album-field_includes'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '-1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_includes',
-      'foreign keys' => array(),
-      'indexes' => array(),
-      'locked' => '0',
-      'module' => 'relation_dummy_field',
-      'settings' => array(),
-      'translatable' => '0',
-      'type' => 'relation',
-    ),
-    'field_instance' => array(
-      'bundle' => 'album',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => 'Used to relate tracks to albums.',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'relation_dummy_field',
-          'settings' => array(),
-          'type' => 'relation_default',
-          'weight' => 3,
-        ),
-        'teaser' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_includes',
-      'label' => 'Includes',
-      'required' => 0,
-      'settings' => array(
-        'relation_type' => array(
-          'includes' => 'includes',
-        ),
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 0,
-        'module' => 'relation_dummy_field',
-        'settings' => array(),
-        'type' => 'relation_default',
-        'weight' => '-1',
-      ),
-    ),
-  );
-
   // Exported field: 'node-album-field_purchase_links'.
   $fields['node-album-field_purchase_links'] = array(
     'field_config' => array(
@@ -312,33 +256,62 @@ function wws_discography_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-track-field_featured_in'.
-  $fields['node-track-field_featured_in'] = array(
+  // Exported field: 'node-track-field_album'.
+  $fields['node-track-field_album'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '-1',
+      'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
-      'field_name' => 'field_featured_in',
-      'foreign keys' => array(),
-      'indexes' => array(),
+      'field_name' => 'field_album',
+      'foreign keys' => array(
+        'node' => array(
+          'columns' => array(
+            'target_id' => 'nid',
+          ),
+          'table' => 'node',
+        ),
+      ),
+      'indexes' => array(
+        'target_id' => array(
+          0 => 'target_id',
+        ),
+      ),
       'locked' => '0',
-      'module' => 'relation_dummy_field',
-      'settings' => array(),
+      'module' => 'entityreference',
+      'settings' => array(
+        'handler' => 'base',
+        'handler_settings' => array(
+          'behaviors' => array(
+            'views-select-list' => array(
+              'status' => 0,
+            ),
+          ),
+          'sort' => array(
+            'type' => 'none',
+          ),
+          'target_bundles' => array(
+            'album' => 'album',
+          ),
+        ),
+        'target_type' => 'node',
+      ),
       'translatable' => '0',
-      'type' => 'relation',
+      'type' => 'entityreference',
     ),
     'field_instance' => array(
       'bundle' => 'track',
       'default_value' => NULL,
       'deleted' => '0',
-      'description' => 'Used to link the albums the track is featured in.',
+      'description' => '',
       'display' => array(
         'default' => array(
           'label' => 'above',
-          'module' => 'relation_dummy_field',
-          'settings' => array(),
-          'type' => 'relation_default',
+          'module' => 'entityreference',
+          'settings' => array(
+            'link' => FALSE,
+          ),
+          'type' => 'entityreference_label',
           'weight' => 1,
         ),
         'teaser' => array(
@@ -349,18 +322,21 @@ function wws_discography_field_default_fields() {
         ),
       ),
       'entity_type' => 'node',
-      'field_name' => 'field_featured_in',
-      'label' => 'featured in',
-      'required' => 1,
+      'field_name' => 'field_album',
+      'label' => 'Album',
+      'required' => 0,
       'settings' => array(
-        'relation_type' => array(),
         'user_register_form' => FALSE,
       ),
       'widget' => array(
-        'active' => 0,
-        'module' => 'relation_dummy_field',
-        'settings' => array(),
-        'type' => 'relation_default',
+        'active' => 1,
+        'module' => 'entityreference',
+        'settings' => array(
+          'match_operator' => 'CONTAINS',
+          'path' => '',
+          'size' => '60',
+        ),
+        'type' => 'entityreference_autocomplete',
         'weight' => '-3',
       ),
     ),
@@ -430,16 +406,13 @@ function wws_discography_field_default_fields() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Album');
   t('Album Cover');
   t('Date the album was released.');
-  t('Includes');
   t('Purchase Links');
   t('Release Date');
   t('This is the track number of the current song.');
   t('Track Number');
-  t('Used to link the albums the track is featured in.');
-  t('Used to relate tracks to albums.');
-  t('featured in');
 
   return $fields;
 }
